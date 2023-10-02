@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Projeto_Sistema_Saude_TRABALHO",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Projeto_Sistema_Saude_TRABALHO::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Projeto_Sistema_Saude_TRABALHO-Debug-10f18eecef5467b2433f.json",
+					"name" : "Projeto_Sistema_Saude_TRABALHO",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/jorge/CLionProjects/Projeto_Sistema_Saude_TRABALHO/cmake-build-debug",
+		"source" : "C:/Users/jorge/CLionProjects/Projeto_Sistema_Saude_TRABALHO"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
