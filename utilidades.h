@@ -4,16 +4,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-// initialization
+int calculateAge(const char DOB[]) {
+    // Assuming the date is known...
+    int currentYear = 2023; // Replace with the actual current year
+    int currentMonth = 10;   // Replace with the actual current month
+    int currentDay = 25;    // Replace with the actual current day
 
-int present_day, present_month, present_year;
+    // Extract the birth year, month, and day from the DOB string
+    int birthYear, birthMonth, birthDay;
+    if (sscanf(DOB, "%d/%d/%d", &birthDay, &birthMonth, &birthYear) != 3) {
+        // Invalid DOB format
+        return -1;
+    }
 
-int calculateAge(char dateofbirth[]) {
+    // Calculate the age
+    int age = currentYear - birthYear;
 
+    // Check if the birthday hasn't occurred yet this year
+    if (currentMonth < birthMonth || (currentMonth == birthMonth && currentDay < birthDay)) {
+        age--; // Subtract 1 year from the age
+    }
 
+    return age;
 }
-
-
 
 #endif //PROJETO_SISTEMA_SAUDE_TRABALHO_UTILIDADES_H

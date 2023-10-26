@@ -12,6 +12,7 @@ int addPatient
         (
                 int patientCodes[],
                 char names[][50],
+                char genders[][10],
                 char RGs[][15],
                 char CPFs[][15],
                 char bloodTypes[][5],

@@ -25,10 +25,9 @@ int main() {
     char statuses[MAX_APPOINTMENTS][50];
     float prices[MAX_APPOINTMENTS];
 
-    int patientCount = 0;
     int appointmentCount = 0;
     int nextPatientCode = 1000; // Initial patient code
-
+    int patientCount = nextPatientCode - 1000;
 
     while (1) {
         printf("\nMenu:\n");
@@ -46,19 +45,89 @@ int main() {
         scanf("%d", &choice);
 
         if (choice == 1) {
-            patientCount = addPatient(patientCodes, names, RGs, CPFs, bloodTypes, RHFactors, addresses, DOBs, ages, nextPatientCode, patientCount);
+            nextPatientCode = addPatient
+                    (
+                            patientCodes,
+                            names,
+                            genders,
+                            RGs,
+                            CPFs,
+                            bloodTypes,
+                            RHFactors,
+                            addresses,
+                            DOBs,
+                            ages,
+                            nextPatientCode,
+                            patientCount
+                            );
+            patientCount = nextPatientCode - 1000;
         } else if (choice == 2) {
-            appointmentCount = addAppointment(appointmentCodes, patientCodesForAppointments, types, appointmentDates, statuses, prices, appointmentCount, patientCount);
+            appointmentCount = addAppointment
+                    (
+                            appointmentCodes,
+                            patientCodesForAppointments,
+                            types,
+                            appointmentDates,
+                            statuses,
+                            prices,
+                            appointmentCount,
+                            patientCount
+                            );
         } else if (choice == 3) {
-            patientCount = removePatient(patientCodes, names, RGs, CPFs, bloodTypes, RHFactors, addresses, DOBs, ages, patientCount);
+            patientCount = removePatient
+                    (
+                            patientCodes,
+                            names,
+                            RGs,
+                            CPFs,
+                            bloodTypes,
+                            RHFactors,
+                            addresses,
+                            DOBs,
+                            ages,
+                            patientCount
+                            );
         } else if (choice == 4) {
-            appointmentCount = removeAppointment(appointmentCodes, statuses, appointmentCount);
+            appointmentCount = removeAppointment
+                    (
+                            appointmentCodes,
+                            statuses,
+                            appointmentCount
+                            );
         } else if (choice == 5) {
-            displayPatientInfo(patientCodes, names, RGs, CPFs, bloodTypes, RHFactors, addresses, DOBs, ages, patientCount);
+            displayPatientInfo
+            (
+                    patientCodes,
+                    names,
+                    RGs,
+                    CPFs,
+                    bloodTypes,
+                    RHFactors,
+                    addresses,
+                    DOBs,
+                    ages,
+                    patientCount
+                    );
         } else if (choice == 6) {
-            displayAppointments(appointmentCodes, patientCodesForAppointments, types, appointmentDates, statuses, prices, appointmentCount);
+            displayAppointments
+            (
+                    appointmentCodes,
+                    patientCodesForAppointments,
+                    types,
+                    appointmentDates,
+                    statuses,
+                    prices,
+                    appointmentCount
+                    );
         } else if (choice == 7) {
-            listPatientsWithInfo(patientCodes, names, DOBs, genders, patientCount);
+            listPatientsWithInfo
+            (
+                    patientCodes,
+                    names,
+                    DOBs,
+                    genders,
+                    patientCount
+                    );
         } else if (choice == 8) {
             exit(0);
         } else {
@@ -69,7 +138,7 @@ int main() {
     return 0;
 }
 
-int addPatient(int patientCodes[], char names[][50], char RGs[][15], char CPFs[][15], char bloodTypes[][5], char RHFactors[], char addresses[][100], char DOBs[][11], int ages[], int nextPatientCode, int patientCount) {
+int addPatient(int patientCodes[], char names[][50], char genders[][10], char RGs[][15], char CPFs[][15], char bloodTypes[][5], char RHFactors[], char addresses[][100], char DOBs[][11], int ages[], int nextPatientCode, int patientCount) {
     if (patientCount >= MAX_PATIENTS) {
         printf("Maximum number of patients reached.\n");
         return nextPatientCode;
@@ -81,14 +150,18 @@ int addPatient(int patientCodes[], char names[][50], char RGs[][15], char CPFs[]
 
     char inputBuffer[50]; // Temporary buffer to read the name
 
-    printf("Enter name: ");
+    printf("\nEnter name: ");
     fgets(inputBuffer, sizeof(inputBuffer), stdin);
-    inputBuffer[strcspn(inputBuffer, "\n")] = '\0'; // Remove the trailing newline
+
+    // Remove the trailing newline
+    if (inputBuffer[strlen(inputBuffer) - 1] == '\n') {
+        inputBuffer[strlen(inputBuffer) - 1] = '\0';
+    }
 
     // Check if the inputBuffer contains a valid name
     if (strlen(inputBuffer) == 0) {
         printf("Please enter a valid name.\n");
-        return patientCount;
+        return nextPatientCode;
     }
 
     // Copy the valid name to the names array
@@ -96,6 +169,23 @@ int addPatient(int patientCodes[], char names[][50], char RGs[][15], char CPFs[]
 
     // Clear the input buffer before continuing
     while ((c = getchar()) != '\n' && c != EOF);
+
+    printf("Enter biological gender (female/male): ");
+    fgets(inputBuffer, sizeof(inputBuffer), stdin);
+    inputBuffer[strcspn(inputBuffer, "\n")] = '\0'; // Remove the trailing newline
+
+    // Check if the inputBuffer contains a valid name
+    if (strlen(inputBuffer) == 0) {
+        printf("Please enter a valid gender.\n");
+        return patientCount;
+    }
+
+    // Copy the valid gender to the genders array
+    strncpy(genders[patientCount], inputBuffer, sizeof(genders[0]));
+
+    // Clear the input buffer before continuing
+    while ((c = getchar()) != '\n' && c != EOF);
+
 
     printf("Enter RG: ");
     fgets(RGs[patientCount], sizeof(RGs[0]), stdin);
@@ -139,7 +229,7 @@ int addPatient(int patientCodes[], char names[][50], char RGs[][15], char CPFs[]
 
     nextPatientCode++;
 
-    printf("Patient added successfully. Patient Code: %d\n", patientCodes[patientCount - 1]);
+    printf("Patient added successfully.\n Patient Code: %d\n", patientCodes[patientCount]);
 
     return nextPatientCode;
 }
@@ -338,7 +428,7 @@ int removePatient
         ages[i] = ages[i + 1];
     }
 
-    printf("Patient removed successfully.\n");
+    printf("Patient removed successfully. \n");
     return patientCount - 1; // Return the updated patient count
 }
 
