@@ -6,28 +6,28 @@
 #include <stdlib.h>
 #include <string.h>
 
-int calculateAge(const char DOB[]) {
-    // Assuming the date is known...
-    int currentYear = 2023; // Replace with the actual current year
-    int currentMonth = 10;   // Replace with the actual current month
-    int currentDay = 25;    // Replace with the actual current day
+int calcularIdade(const char dataNascimento[]) {
+    // Supondo que a data seja conhecida...
+    int anoAtual = 2023; // Substitua pelo ano atual real
+    int mesAtual = 10;   // Substitua pelo mês atual real
+    int diaAtual = 26;    // Substitua pelo dia atual real
 
-    // Extract the birth year, month, and day from the DOB string
-    int birthYear, birthMonth, birthDay;
-    if (sscanf(DOB, "%d/%d/%d", &birthDay, &birthMonth, &birthYear) != 3) {
-        // Invalid DOB format
+    // Extrair o ano, mês e dia de nascimento da string de data de nascimento
+    int anoNascimento, mesNascimento, diaNascimento;
+    if (sscanf(dataNascimento, "%d/%d/%d", &diaNascimento, &mesNascimento, &anoNascimento) != 3) {
+        // Formato de data de nascimento inválido
         return -1;
     }
 
-    // Calculate the age
-    int age = currentYear - birthYear;
+    // Calcular a idade
+    int idade = anoAtual - anoNascimento;
 
-    // Check if the birthday hasn't occurred yet this year
-    if (currentMonth < birthMonth || (currentMonth == birthMonth && currentDay < birthDay)) {
-        age--; // Subtract 1 year from the age
+    // Verificar se o aniversário ainda não ocorreu neste ano
+    if (mesAtual < mesNascimento || (mesAtual == mesNascimento && diaAtual < diaNascimento)) {
+        idade--; // Subtrair 1 ano da idade
     }
 
-    return age;
+    return idade;
 }
 
 #endif //PROJETO_SISTEMA_SAUDE_TRABALHO_UTILIDADES_H

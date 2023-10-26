@@ -8,90 +8,79 @@
 #define MAX_APPOINTMENTS 100
 
 // PROTOTYPES FOR REFERENCE
-int addPatient
+int adicionarPaciente
         (
-                int patientCodes[],
-                char names[][50],
-                char genders[][10],
+                int codigosPacientes[],
+                char nomes[][50],
+                char generos[][10],
                 char RGs[][15],
                 char CPFs[][15],
-                char bloodTypes[][5],
-                char RHFactors[],
-                char addresses[][100],
-                char DOBs[][11],
-                int ages[],
-                int nextPatientCode,
-                int patientCount
+                char tiposSanguineos[][5],
+                char fatoresRH[],
+                char enderecos[][100],
+                char datasNascimento[][11],
+                int idades[],
+                int proximoCodigoPaciente,
+                int totalPacientes
         );
-int addAppointment
+int adicionarAgendamento
         (
-                int appointmentCodes[],
-                int patientCodes[],
-                char types[][20],
-                char appointmentDates[][11],
-                char statuses[][50],
-                float prices[],
-                int appointmentCount,
-                int patientCount
+                int codigosAgendamentos[],
+                int codigosPacientes[],
+                char tipos[][20],
+                char datasAgendamento[][11],
+                char status[][50],
+                float precos[],
+                int totalAgendamentos,
+                int totalPacientes
         );
-void displayPatientInfo
+void exibirInformacoesPaciente
         (
-                int patientCodes[],
-                char names[][50],
-                char RGs[][15],
-                char CPFs[][15],
-                char bloodTypes[][5],
-                char RHFactors[],
-                char addresses[][100],
-                char DOBs[][11],
-                int ages[], // To be calculated in a future library
-                int patientCount
+                int codigosPacientes[], char nomes[][50],
+                char RGs[][15], char CPFs[][15],
+                char tiposSanguineos[][5], char fatoresRH[],
+                char enderecos[][100], char datasNascimento[][11],
+                int idades[], int totalPacientes
         );
-void displayAppointments
+void exibirAgendamentos
         (
-                int appointmentCodes[],
-                int patientCodes[],
-                char types[][20],
-                char appointmentDates[][11],
-                char statuses[][50],
-                float prices[],
-                int appointmentCount
+                int codigosAgendamentos[], int codigosPacientes[],
+                char tipos[][20], char datasAgendamento[][11],
+                char status[][50], float precos[],
+                int totalAgendamentos
         );
-int removePatient
-(
-        int patientCodes[],
-        char names[][50],
-        char RGs[][15],
-        char CPFs[][15],
-        char bloodTypes[][5],
-        char RHFactors[],
-        char addresses[][100],
-        char DOBs[][11],
-        int ages[],
-        int patientCount
+int removerPaciente
+        (int codigosPacientes[],
+         char nomes[][50],
+         char RGs[][15],
+         char CPFs[][15],
+         char tiposSanguineos[][5],
+         char fatoresRH[],
+         char enderecos[][100],
+         char datasNascimento[][11],
+         int idades[],
+         int totalPacientes);
+int removerAgendamento
+        (int codigosAgendamentos[],
+         char status[][50],
+         int totalAgendamentos);
+void exibirAgendamentos
+        (
+                int codigosAgendamentos[], int codigosPacientes[],
+                char tipos[][20], char datasAgendamento[][11],
+                char status[][50], float precos[],
+                int totalAgendamentos
         );
-int removeAppointment
-(
-        int appointmentCodes[],
-        char statuses[][50],
-        int appointmentCount
+void listarPacientesComInformacoes
+        (
+                int codigosPacientes[],
+                char nomes[][50],
+                char datasNascimento[][11],
+                char generos[][10],
+                int totalPacientes
         );
-void displayAppointments
+int calcularIdade
 (
-        int appointmentCodes[],
-        int patientCodes[],
-        char types[][20],
-        char appointmentDates[][11],
-        char statuses[][50],
-        float prices[],
-        int appointmentCount
-        );
-void listPatientsWithInfo
-(
-        int patientCodes[],
-        char names[][50],
-        char DOBs[][11],
-        char genders[][10],
-        int patientCount
+        const char dataNascimento[]
         );
 

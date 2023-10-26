@@ -5,4 +5,5 @@ set(CMAKE_C_STANDARD 99)
 
 add_library(Projeto_Sistema_Saude_TRABALHO "crud prof.c"
         utilidades.h
-        "projeto base.c")
+        "projeto base.c"
+        traduçao.c)

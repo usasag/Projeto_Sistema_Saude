@@ -3,499 +3,511 @@
 #include <string.h>
 #include "crud.h"
 
-#define MAX_PATIENTS 100
-#define MAX_APPOINTMENTS 100
+#define MAX_PACIENTES 100
+#define MAX_AGENDAMENTOS 100
+
+int codigosPacientesParaAgendamentos[MAX_AGENDAMENTOS];
+int numeroAgendamentoPorPaciente[MAX_PACIENTES] = {0};
 
 int main() {
-    int patientCodes[MAX_PATIENTS];
-    char names[MAX_PATIENTS][50];
-    char RGs[MAX_PATIENTS][15];
-    char CPFs[MAX_PATIENTS][15];
-    char bloodTypes[MAX_PATIENTS][5];
-    char genders[MAX_PATIENTS][10];
-    char RHFactors[MAX_PATIENTS];
-    char addresses[MAX_PATIENTS][100];
-    char DOBs[MAX_PATIENTS][11];
-    int ages[MAX_PATIENTS];
+    int codigosPacientes[MAX_PACIENTES];
+    char nomes[MAX_PACIENTES][50];
+    char RGs[MAX_PACIENTES][15];
+    char CPFs[MAX_PACIENTES][15];
+    char tiposSanguineos[MAX_PACIENTES][5];
+    char generos[MAX_PACIENTES][10];
+    char fatoresRH[MAX_PACIENTES];
+    char enderecos[MAX_PACIENTES][100];
+    char datasNascimento[MAX_PACIENTES][11];
+    int idades[MAX_PACIENTES];
 
-    int appointmentCodes[MAX_APPOINTMENTS];
-    int patientCodesForAppointments[MAX_APPOINTMENTS];
-    char types[MAX_APPOINTMENTS][20];
-    char appointmentDates[MAX_APPOINTMENTS][11];
-    char statuses[MAX_APPOINTMENTS][50];
-    float prices[MAX_APPOINTMENTS];
+    int codigosAgendamentos[MAX_AGENDAMENTOS];
+    char tipos[MAX_AGENDAMENTOS][20];
+    char datasAgendamento[MAX_AGENDAMENTOS][11];
+    char status[MAX_AGENDAMENTOS][50];
+    float precos[MAX_AGENDAMENTOS];
 
-    int appointmentCount = 0;
-    int nextPatientCode = 1000; // Initial patient code
-    int patientCount = nextPatientCode - 1000;
+    int totalAgendamentos = 0;
+    int proximoCodigoPaciente = 1000; // Código inicial do paciente
+    int totalPacientes = proximoCodigoPaciente - 1000;
 
     while (1) {
         printf("\nMenu:\n");
-        printf("1. Add Patient\n");
-        printf("2. Add Appointment\n");
-        printf("3. Remove Patient\n");
-        printf("4. Remove Appointment\n");
-        printf("5. Display Patient Information\n");
-        printf("6. Display Appointments\n");
-        printf("7. List Patients with Info\n");
-        printf("8. Exit\n");
+        printf("1. Adicionar Paciente\n");
+        printf("2. Adicionar Agendamento\n");
+        printf("3. Remover Paciente\n");
+        printf("4. Remover Agendamento\n");
+        printf("5. Exibir Informacoes do Paciente\n");
+        printf("6. Exibir Agendamentos\n");
+        printf("7. Listar Pacientes com Informacoes\n");
+        printf("8. Sair\n");
 
-        int choice;
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+        int escolha;
+        printf("Digite sua escolha: ");
+        scanf("%d", &escolha);
 
-        if (choice == 1) {
-            nextPatientCode = addPatient
+        if (escolha == 1) {
+            proximoCodigoPaciente = adicionarPaciente
                     (
-                            patientCodes,
-                            names,
-                            genders,
+                            codigosPacientes,
+                            nomes,
+                            generos,
                             RGs,
                             CPFs,
-                            bloodTypes,
-                            RHFactors,
-                            addresses,
-                            DOBs,
-                            ages,
-                            nextPatientCode,
-                            patientCount
-                            );
-            patientCount = nextPatientCode - 1000;
-        } else if (choice == 2) {
-            appointmentCount = addAppointment
+                            tiposSanguineos,
+                            fatoresRH,
+                            enderecos,
+                            datasNascimento,
+                            idades,
+                            proximoCodigoPaciente,
+                            totalPacientes
+                    );
+            totalPacientes = proximoCodigoPaciente - 1000;
+        } else if (escolha == 2) {
+            totalAgendamentos = adicionarAgendamento
                     (
-                            appointmentCodes,
-                            patientCodesForAppointments,
-                            types,
-                            appointmentDates,
-                            statuses,
-                            prices,
-                            appointmentCount,
-                            patientCount
-                            );
-        } else if (choice == 3) {
-            patientCount = removePatient
+                            codigosAgendamentos,
+                            codigosPacientes,
+                            tipos,
+                            datasAgendamento,
+                            status,
+                            precos,
+                            totalAgendamentos,
+                            totalPacientes
+                    );
+        } else if (escolha == 3) {
+            totalPacientes = removerPaciente
                     (
-                            patientCodes,
-                            names,
+                            codigosPacientes,
+                            nomes,
                             RGs,
                             CPFs,
-                            bloodTypes,
-                            RHFactors,
-                            addresses,
-                            DOBs,
-                            ages,
-                            patientCount
-                            );
-        } else if (choice == 4) {
-            appointmentCount = removeAppointment
+                            tiposSanguineos,
+                            fatoresRH,
+                            enderecos,
+                            datasNascimento,
+                            idades,
+                            totalPacientes
+                    );
+        } else if (escolha == 4) {
+            totalAgendamentos = removerAgendamento
                     (
-                            appointmentCodes,
-                            statuses,
-                            appointmentCount
-                            );
-        } else if (choice == 5) {
-            displayPatientInfo
-            (
-                    patientCodes,
-                    names,
-                    RGs,
-                    CPFs,
-                    bloodTypes,
-                    RHFactors,
-                    addresses,
-                    DOBs,
-                    ages,
-                    patientCount
+                            codigosAgendamentos,
+                            status,
+                            totalAgendamentos
                     );
-        } else if (choice == 6) {
-            displayAppointments
-            (
-                    appointmentCodes,
-                    patientCodesForAppointments,
-                    types,
-                    appointmentDates,
-                    statuses,
-                    prices,
-                    appointmentCount
+        } else if (escolha == 5) {
+            exibirInformacoesPaciente
+                    (
+                            codigosPacientes,
+                            nomes,
+                            RGs,
+                            CPFs,
+                            tiposSanguineos,
+                            fatoresRH,
+                            enderecos,
+                            datasNascimento,
+                            idades,
+                            totalPacientes
                     );
-        } else if (choice == 7) {
-            listPatientsWithInfo
-            (
-                    patientCodes,
-                    names,
-                    DOBs,
-                    genders,
-                    patientCount
+        } else if (escolha == 6) {
+            exibirAgendamentos
+                    (
+                            codigosAgendamentos,
+                            codigosPacientes,
+                            tipos,
+                            datasAgendamento,
+                            status,
+                            precos,
+                            totalAgendamentos
                     );
-        } else if (choice == 8) {
+        } else if (escolha == 7) {
+            listarPacientesComInformacoes
+                    (
+                            codigosPacientes,
+                            nomes,
+                            datasNascimento,
+                            generos,
+                            totalPacientes
+                    );
+        } else if (escolha == 8) {
             exit(0);
         } else {
-            printf("Invalid choice. Please try again.\n");
+            printf("Escolha invalida. Por favor, tente novamente.\n");
         }
     }
 
     return 0;
 }
 
-int addPatient(int patientCodes[], char names[][50], char genders[][10], char RGs[][15], char CPFs[][15], char bloodTypes[][5], char RHFactors[], char addresses[][100], char DOBs[][11], int ages[], int nextPatientCode, int patientCount) {
-    if (patientCount >= MAX_PATIENTS) {
-        printf("Maximum number of patients reached.\n");
-        return nextPatientCode;
+int adicionarPaciente
+        (
+                int codigosPacientes[],
+                char nomes[][50],
+                char generos[][10],
+                char RGs[][15],
+                char CPFs[][15],
+                char tiposSanguineos[][5],
+                char fatoresRH[],
+                char enderecos[][100],
+                char datasNascimento[][11],
+                int idades[],
+                int proximoCodigoPaciente,
+                int totalPacientes
+        )
+{
+    if (totalPacientes >= MAX_PACIENTES) {
+        printf("Numero maximo de pacientes atingido.\n");
+        return proximoCodigoPaciente;
     }
 
-    // Clear the input buffer
+    // Limpar o buffer de entrada
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 
-    char inputBuffer[50]; // Temporary buffer to read the name
+    printf("\nDigite o nome: ");
+    scanf("%[^\n]", nomes[totalPacientes]);
 
-    printf("\nEnter name: ");
-    fgets(inputBuffer, sizeof(inputBuffer), stdin);
-
-    // Remove the trailing newline
-    if (inputBuffer[strlen(inputBuffer) - 1] == '\n') {
-        inputBuffer[strlen(inputBuffer) - 1] = '\0';
+    // Verificar se o nome é válido.
+    if (strlen(nomes[totalPacientes]) == 0) {
+        printf("Por favor, insira um nome valido.\n");
+        return proximoCodigoPaciente;
     }
 
-    // Check if the inputBuffer contains a valid name
-    if (strlen(inputBuffer) == 0) {
-        printf("Please enter a valid name.\n");
-        return nextPatientCode;
-    }
-
-    // Copy the valid name to the names array
-    strncpy(names[patientCount], inputBuffer, sizeof(names[0]));
-
-    // Clear the input buffer before continuing
+    // Limpar o buffer de entrada antes de continuar
     while ((c = getchar()) != '\n' && c != EOF);
 
-    printf("Enter biological gender (female/male): ");
-    fgets(inputBuffer, sizeof(inputBuffer), stdin);
-    inputBuffer[strcspn(inputBuffer, "\n")] = '\0'; // Remove the trailing newline
+    printf("Digite o genero biologico (F/M): ");
+    scanf("%c",generos[totalPacientes]);
 
-    // Check if the inputBuffer contains a valid name
-    if (strlen(inputBuffer) == 0) {
-        printf("Please enter a valid gender.\n");
-        return patientCount;
+    // Verificar se o gênero é válido
+    if (strlen(generos[totalPacientes]) == 0) {
+        printf("Por favor, insira um gênero valido.\n");
+        return totalPacientes;
     }
 
-    // Copy the valid gender to the genders array
-    strncpy(genders[patientCount], inputBuffer, sizeof(genders[0]));
-
-    // Clear the input buffer before continuing
+    // Limpar o buffer...
     while ((c = getchar()) != '\n' && c != EOF);
 
+    printf("Digite o RG: ");
+    fgets(RGs[totalPacientes], sizeof(RGs[0]), stdin);
+    RGs[totalPacientes][strcspn(RGs[totalPacientes], "\n")] = '\0';
 
-    printf("Enter RG: ");
-    fgets(RGs[patientCount], sizeof(RGs[0]), stdin);
-    RGs[patientCount][strcspn(RGs[patientCount], "\n")] = '\0';
+    printf("Digite o CPF: ");
+    fgets(CPFs[totalPacientes], sizeof(CPFs[0]), stdin);
+    CPFs[totalPacientes][strcspn(CPFs[totalPacientes], "\n")] = '\0';
 
-    printf("Enter CPF: ");
-    fgets(CPFs[patientCount], sizeof(CPFs[0]), stdin);
-    CPFs[patientCount][strcspn(CPFs[patientCount], "\n")] = '\0';
+    printf("Digite o tipo sanguineo: ");
+    fgets(tiposSanguineos[totalPacientes], sizeof(tiposSanguineos[0]), stdin);
+    tiposSanguineos[totalPacientes][strcspn(tiposSanguineos[totalPacientes], "\n")] = '\0';
 
-    printf("Enter Blood Type: ");
-    fgets(bloodTypes[patientCount], sizeof(bloodTypes[0]), stdin);
-    bloodTypes[patientCount][strcspn(bloodTypes[patientCount], "\n")] = '\0';
+    printf("Digite o fator RH: ");
+    scanf(" %c", &fatoresRH[totalPacientes]);
 
-    printf("Enter RH Factor: ");
-    scanf(" %c", &RHFactors[patientCount]);
-
-    // Clear the input buffer before address input
+    // Limpar o buffer de entrada antes de inserir o endereço
     while ((c = getchar()) != '\n' && c != EOF);
 
-    printf("Enter Address: ");
-    fgets(inputBuffer, sizeof(inputBuffer), stdin);
-    inputBuffer[strcspn(inputBuffer, "\n")] = '\0'; // Remove the trailing newline
+    printf("Digite o endereco: ");
+    scanf("%[^\n]",enderecos[totalPacientes]);
 
-    // Check if the inputBuffer contains a valid address
-    if (strlen(inputBuffer) == 0) {
-        printf("Please enter a valid address.\n");
-        return patientCount;
+    // Verificar se o endereço é válido
+    if (strlen(enderecos[totalPacientes]) == 0) {
+        printf("Por favor, insira um endereco valido.\n");
+        return totalPacientes;
     }
 
-    // Copy the valid address to the addresses array
-    strncpy(addresses[patientCount], inputBuffer, sizeof(addresses[0]));
+    while ((c = getchar()) != '\n' && c != EOF);
 
-    printf("Enter DOB (dd/mm/yyyy): ");
-    fgets(DOBs[patientCount], sizeof(DOBs[0]), stdin);
-    DOBs[patientCount][strcspn(DOBs[patientCount], "\n")] = '\0';
+    printf("Digite a data de nascimento (dd/mm/yyyy): ");
+    fgets(datasNascimento[totalPacientes], sizeof(datasNascimento[0]), stdin);
+    datasNascimento[totalPacientes][strcspn(datasNascimento[totalPacientes], "\n")] = '\0';
 
-    ages[patientCount] = calculateAge(DOBs[patientCount]);
+    idades[totalPacientes] = calcularIdade(datasNascimento[totalPacientes]);
 
-    // Assign the next available patient code and increment
-    patientCodes[patientCount] = nextPatientCode;
+    // Atribuir o próximo código de paciente disponível e incrementar
+    codigosPacientes[totalPacientes] = proximoCodigoPaciente;
 
-    nextPatientCode++;
+    proximoCodigoPaciente++;
 
-    printf("Patient added successfully.\n Patient Code: %d\n", patientCodes[patientCount]);
+    printf("Paciente adicionado com sucesso. Codigo do Paciente: %d\n", codigosPacientes[totalPacientes]);
 
-    return nextPatientCode;
+    return proximoCodigoPaciente;
 }
 
-int addAppointment
+int adicionarAgendamento
         (
-                int appointmentCodes[], int patientCodes[],
-                char types[][20], char appointmentDates[][11],
-                char statuses[][50], float prices[],
-                int appointmentCount, int patientCount
+                int codigosAgendamentos[], int codigosPacientes[],
+                char tipos[][20], char datasAgendamento[][11],
+                char status[][50], float precos[],
+                int totalAgendamentos, int totalPacientes
         ) {
-    if (appointmentCount >= MAX_APPOINTMENTS) {
-        printf("Maximum number of appointments reached.\n");
-        return appointmentCount;
+    if (totalAgendamentos >= MAX_AGENDAMENTOS) {
+        printf("Limite maximo de agendamentos atingido.\n");
+        return totalAgendamentos;
     }
 
-    if (patientCount == 0) {
-        printf("No patients available. Please add a patient first.\n");
-        return appointmentCount;
+    if (totalPacientes == 0) {
+        printf("Nenhum paciente disponível. Adicione um paciente primeiro.\n");
+        return totalAgendamentos;
     }
 
-    printf("Enter Appointment Code: ");
-    scanf("%d", &appointmentCodes[appointmentCount]);
+    printf("Digite o Codigo do Agendamento: ");
+    scanf("%d", &codigosAgendamentos[totalAgendamentos]);
 
-    int patientCode;
-    printf("Enter Patient Code: ");
-    scanf("%d", &patientCode);
+    int codigoPaciente;
+    printf("Digite o Codigo do Paciente: ");
+    scanf("%d", &codigoPaciente);
 
-    // Check if the patient with the given code exists
-    int patientIndex = -1;
-    for (int i = 0; i < patientCount; i++) {
-        if (patientCodes[i] == patientCode) {
-            patientIndex = i;
+    // Verificar se o paciente com o código fornecido existe
+    int indicePaciente = -1;
+    for (int i = 0; i < totalPacientes; i++) {
+        if (codigosPacientes[i] == codigoPaciente) {
+            indicePaciente = i;
             break;
         }
     }
 
-    if (patientIndex == -1) {
-        printf("Patient with the given code not found.\n");
-        return appointmentCount;
+    if (indicePaciente == -1) {
+        printf("Paciente com o codigo fornecido nao encontrado.\n");
+        return totalAgendamentos;
     }
 
-    // Check if there's already an appointment for this patient on the same day
-    char newAppointmentDate[11];
-    printf("Enter Appointment Date (dd/mm/yyyy): ");
-    scanf(" %[^\n]", newAppointmentDate);
-    for (int i = 0; i < appointmentCount; i++) {
-        if (patientCodes[i] == patientCode && strcmp(appointmentDates[i], newAppointmentDate) == 0) {
-            printf("Error: There's already an appointment for this patient on the same day.\n");
-            return appointmentCount;
+
+    // Gerear o código automaticamente (não implementado ainda)
+    char codigoAgendamento[20];
+    snprintf
+    (codigoAgendamento,
+     sizeof(codigoAgendamento),
+     "%d_%d", codigoPaciente,
+     numeroAgendamentoPorPaciente[indicePaciente] + 1
+     );
+
+
+    // Verificar se já existe um agendamento para este paciente na mesma data
+    char novaDataAgendamento[11];
+    printf("Digite a Data do Agendamento (dd/mm/aaaa): ");
+    scanf(" %[^\n]", novaDataAgendamento);
+    for (int i = 0; i < totalAgendamentos; i++) {
+        if (codigosPacientesParaAgendamentos[i] == codigoPaciente &&
+            strcmp(datasAgendamento[i], novaDataAgendamento) == 0) {
+            printf("Erro: Ja existe um agendamento para este paciente na mesma data.\n");
+            return totalAgendamentos;
         }
     }
 
-    patientCodes[appointmentCount] = patientCode;
+    codigosPacientesParaAgendamentos[totalAgendamentos] = codigoPaciente;
 
-    printf("Enter Type (appointment/return): ");
-    scanf(" %[^\n]", types[appointmentCount]);
-    strcpy(appointmentDates[appointmentCount], newAppointmentDate);
-    strcpy(statuses[appointmentCount], "Scheduled"); // Set status to "Scheduled" initially
-    printf("Enter Price: ");
-    scanf("%f", &prices[appointmentCount]);
+    printf("Digite o Tipo (agendamento/retorno): ");
+    scanf(" %[^\n]", tipos[totalAgendamentos]);
+    strcpy(datasAgendamento[totalAgendamentos], novaDataAgendamento);
+    strcpy(status[totalAgendamentos], "Agendado"); // Define o status como "Agendado" inicialmente
+    printf("Digite o Preco: ");
+    scanf("%f", &precos[totalAgendamentos]);
 
-    appointmentCount++;
-    printf("Appointment added successfully. Appointment Code: %d\n", appointmentCodes[appointmentCount - 1]);
+    totalAgendamentos++;
+    printf("Agendamento adicionado com sucesso. Codigo do Agendamento: %d\n",
+           codigosAgendamentos[totalAgendamentos - 1]);
 
-    return appointmentCount;
+    return totalAgendamentos;
 }
 
-void displayPatientInfo
-(
-        int patientCodes[], char names[][50],
-        char RGs[][15], char CPFs[][15],
-        char bloodTypes[][5], char RHFactors[],
-        char addresses[][100], char DOBs[][11],
-        int ages[], int patientCount
+void exibirInformacoesPaciente
+        (
+                int codigosPacientes[], char nomes[][50],
+                char RGs[][15], char CPFs[][15],
+                char tiposSanguineos[][5], char fatoresRH[],
+                char enderecos[][100], char datasNascimento[][11],
+                int idades[], int totalPacientes
         )
-        {
-    if (patientCount == 0) {
-        printf("No patients available.\n");
+{
+    if (totalPacientes == 0) {
+        printf("Nenhum paciente disponivel.\n");
         return;
     }
 
-    int patientCode;
-    printf("Enter Patient Code: ");
-    scanf("%d", &patientCode);
+    int codigoPaciente;
+    printf("Digite o Codigo do Paciente: ");
+    scanf("%d", &codigoPaciente);
 
-    int patientIndex = -1;
-    for (int i = 0; i < patientCount; i++) {
-        if (patientCodes[i] == patientCode) {
-            patientIndex = i;
+    int indicePaciente = -1;
+    for (int i = 0; i < totalPacientes; i++) {
+        if (codigosPacientes[i] == codigoPaciente) {
+            indicePaciente = i;
             break;
         }
     }
 
-    if (patientIndex == -1) {
-        printf("Patient with the given code not found.\n");
+    if (indicePaciente == -1) {
+        printf("Paciente com o codigo fornecido nao encontrado.\n");
     } else {
-        // Display patient information
-        printf("Patient Code: %d\n", patientCodes[patientIndex]);
-        printf("Name: %s\n", names[patientIndex]);
-        printf("RG: %s\n", RGs[patientIndex]);
-        printf("CPF: %s\n", CPFs[patientIndex]);
-        printf("Blood Type: %s\n", bloodTypes[patientIndex]);
-        printf("RH Factor: %c\n", RHFactors[patientIndex]);
-        printf("Address: %s\n", addresses[patientIndex]);
-        printf("Date of Birth: %s\n", DOBs[patientIndex]);
-        printf("Age: %d\n", ages[patientIndex]); // To be calculated in a future library
+        // Exibir informações do paciente
+        printf("Codigo do Paciente: %d\n", codigosPacientes[indicePaciente]);
+        printf("Nome: %s\n", nomes[indicePaciente]);
+        printf("RG: %s\n", RGs[indicePaciente]);
+        printf("CPF: %s\n", CPFs[indicePaciente]);
+        printf("Tipo Sanguineo: %s\n", tiposSanguineos[indicePaciente]);
+        printf("Fator RH: %c\n", fatoresRH[indicePaciente]);
+        printf("Endereco: %s\n", enderecos[indicePaciente]);
+        printf("Data de Nascimento: %s\n", datasNascimento[indicePaciente]);
+        printf("Idade: %d\n", idades[indicePaciente]); // A ser calculada em uma biblioteca futura
     }
 }
 
-void displayAppointments
-(
-        int appointmentCodes[], int patientCodes[],
-        char types[][20], char appointmentDates[][11],
-        char statuses[][50], float prices[],
-        int appointmentCount
+void exibirAgendamentos
+        (
+                int codigosAgendamentos[], int codigosPacientes[],
+                char tipos[][20], char datasAgendamento[][11],
+                char status[][50], float precos[],
+                int totalAgendamentos
         ) {
-    if (appointmentCount == 0) {
-        printf("No appointments available.\n");
+    if (totalAgendamentos == 0) {
+        printf("Nenhum agendamento disponivel.\n");
         return;
     }
 
-    int patientCode;
-    printf("Enter Patient Code: ");
-    scanf("%d", &patientCode);
+    int codigoPaciente;
+    printf("Digite o Codigo do Paciente: ");
+    scanf("%d", &codigoPaciente);
 
-    printf("Appointments for Patient Code %d:\n", patientCode);
+    printf("Agendamentos para o Codigo do Paciente %d:\n", codigoPaciente);
 
-    for (int i = 0; i < appointmentCount; i++) {
-        if (patientCodes[i] == patientCode) {
-            // Display appointment information
-            printf("Appointment Code: %d\n", appointmentCodes[i]);
-            printf("Patient Code: %d\n", patientCodes[i]);
-            printf("Type: %s\n", types[i]);
-            printf("Appointment Date: %s\n", appointmentDates[i]);
-            printf("Status: %s\n", statuses[i]);
-            printf("Price: %.2f\n", prices[i]);
+    for (int i = 0; i < totalAgendamentos; i++) {
+        if (codigosPacientes[i] == codigoPaciente) {
+            // Exibir informações do agendamento
+            printf("Codigo do Agendamento: %d\n", codigosAgendamentos[i]);
+            printf("Codigo do Paciente: %d\n", codigosPacientes[i]);
+            printf("Tipo: %s\n", tipos[i]);
+            printf("Data do Agendamento: %s\n", datasAgendamento[i]);
+            printf("Status: %s\n", status[i]);
+            printf("Preco: %.2f\n", precos[i]);
         }
     }
 }
 
-int removePatient
-(int patientCodes[],
- char names[][50],
- char RGs[][15],
- char CPFs[][15],
- char bloodTypes[][5],
- char RHFactors[],
- char addresses[][100],
- char DOBs[][11],
- int ages[],
- int patientCount)
- {
-    if (patientCount == 0) {
-        printf("No patients available for removal.\n");
-        return patientCount;
+int removerPaciente
+        (
+                int codigosPacientes[],char nomes[][50],
+                char RGs[][15],char CPFs[][15],
+                char tiposSanguineos[][5],char fatoresRH[],
+                char enderecos[][100],char datasNascimento[][11],
+                int idades[],int totalPacientes
+        )
+{
+    if (totalPacientes == 0) {
+        printf("Nenhum paciente disponivel para remocao.\n");
+        return totalPacientes;
     }
 
-    int patientCode;
-    printf("Enter Patient Code for removal: ");
-    scanf("%d", &patientCode);
+    int codigoPaciente;
+    printf("Digite o Codigo do Paciente para remocao: ");
+    scanf("%d", &codigoPaciente);
 
-    int patientIndex = -1;
-    for (int i = 0; i < patientCount; i++) {
-        if (patientCodes[i] == patientCode) {
-            patientIndex = i;
+    int indicePaciente = -1;
+    for (int i = 0; i < totalPacientes; i++) {
+        if (codigosPacientes[i] == codigoPaciente) {
+            indicePaciente = i;
             break;
         }
     }
 
-    if (patientIndex == -1) {
-        printf("Patient with the given code not found.\n");
-        return patientCount;
+    if (indicePaciente == -1) {
+        printf("Paciente com o codigo fornecido nao encontrado.\n");
+        return totalPacientes;
     }
 
-    // Confirm the patient's name before removal
-    printf("Confirm the patient's name for removal (type exactly): ");
-    char confirmName[50];
-    scanf(" %[^\n]", confirmName);
+    // Confirmar o nome do paciente antes de remover
+    printf("Confirme o nome do paciente para remocao (digite exatamente): ");
+    char nomeConfirmacao[50];
+    scanf(" %[^\n]", nomeConfirmacao);
 
-    if (strcmp(names[patientIndex], confirmName) != 0) {
-        printf("Patient's name does not match. Removal canceled.\n");
-        return patientCount;
+    if (strcmp(nomes[indicePaciente], nomeConfirmacao) != 0) {
+        printf("O nome do paciente nao corresponde. Remocao cancelada.\n");
+        return totalPacientes;
     }
 
-    // Shift remaining patients to fill the gap
-    for (int i = patientIndex; i < patientCount - 1; i++) {
-        patientCodes[i] = patientCodes[i + 1];
-        strcpy(names[i], names[i + 1]);
+    // Deslocar os pacientes restantes para preencher o vazio (não sei se é a melhor prática fazer assim, mas ta funcionando)
+    for (int i = indicePaciente; i < totalPacientes - 1; i++) {
+        codigosPacientes[i] = codigosPacientes[i + 1];
+        strcpy(nomes[i], nomes[i + 1]);
         strcpy(RGs[i], RGs[i + 1]);
         strcpy(CPFs[i], CPFs[i + 1]);
-        strcpy(bloodTypes[i], bloodTypes[i + 1]);
-        RHFactors[i] = RHFactors[i + 1];
-        strcpy(addresses[i], addresses[i + 1]);
-        strcpy(DOBs[i], DOBs[i + 1]);
-        ages[i] = ages[i + 1];
+        strcpy(tiposSanguineos[i], tiposSanguineos[i + 1]);
+        fatoresRH[i] = fatoresRH[i + 1];
+        strcpy(enderecos[i], enderecos[i + 1]);
+        strcpy(datasNascimento[i], datasNascimento[i + 1]);
+        idades[i] = idades[i + 1];
     }
 
-    printf("Patient removed successfully. \n");
-    return patientCount - 1; // Return the updated patient count
+    printf("Paciente removido com sucesso. \n");
+    return totalPacientes - 1; // Retorna o número atualizado dos pacientes
 }
 
-int removeAppointment
-(int appointmentCodes[],
- char statuses[][50],
- int appointmentCount) {
-    if (appointmentCount == 0) {
-        printf("No appointments available for removal.\n");
-        return appointmentCount;
+int removerAgendamento
+        (int codigosAgendamentos[],
+         char status[][50],
+         int totalAgendamentos) {
+    if (totalAgendamentos == 0) {
+        printf("Nenhum agendamento disponivel para remocao.\n");
+        return totalAgendamentos;
     }
 
-    int appointmentCode;
-    printf("Enter Appointment Code for removal: ");
-    scanf("%d", &appointmentCode);
+    int codigoAgendamento;
+    printf("Digite o Codigo do Agendamento para remocao: ");
+    scanf("%d", &codigoAgendamento);
 
-    int appointmentIndex = -1;
-    for (int i = 0; i < appointmentCount; i++) {
-        if (appointmentCodes[i] == appointmentCode) {
-            appointmentIndex = i;
+    int indiceAgendamento = -1;
+    for (int i = 0; i < totalAgendamentos; i++) {
+        if (codigosAgendamentos[i] == codigoAgendamento) {
+            indiceAgendamento = i;
             break;
         }
     }
 
-    if (appointmentIndex == -1) {
-        printf("Appointment with the given code not found.\n");
-        return appointmentCount;
+    if (indiceAgendamento == -1) {
+        printf("Agendamento com o codigo fornecido nao encontrado.\n");
+        return totalAgendamentos;
     }
 
-    // Confirm the appointment code before removal
-    printf("Confirm the appointment code for removal: ");
-    int confirmCode;
-    scanf("%d", &confirmCode);
+    // Confirmar o código do agendamento antes de remover
+    printf("Confirme o codigo do agendamento para remocao: ");
+    int codigoConfirmacao;
+    scanf("%d", &codigoConfirmacao);
 
-    if (confirmCode != appointmentCode) {
-        printf("Appointment code does not match. Removal canceled.\n");
-        return appointmentCount;
+    if (codigoConfirmacao != codigoAgendamento) {
+        printf("O codigo do agendamento nao corresponde. Remocao cancelada.\n");
+        return totalAgendamentos;
     }
 
-    // Shift remaining appointments to fill the gap
-    for (int i = appointmentIndex; i < appointmentCount - 1; i++) {
-        appointmentCodes[i] = appointmentCodes[i + 1];
-        strcpy(statuses[i], statuses[i + 1]);
+    // Deslocar os agendamentos restantes para preencher a lacuna (mesma coisa dos pacientes)
+    for (int i = indiceAgendamento; i < totalAgendamentos - 1; i++) {
+        codigosAgendamentos[i] = codigosAgendamentos[i + 1];
+        strcpy(status[i], status[i + 1]);
     }
 
-    printf("Appointment removed successfully.\n");
-    return appointmentCount - 1; // Return the updated appointment count
+    printf("Agendamento removido com sucesso.\n");
+    return totalAgendamentos - 1; // Retorna o número atualizado de agendamentos
 }
 
-void listPatientsWithInfo(int patientCodes[], char names[][50], char DOBs[][11], char genders[][10], int patientCount) {
-    if (patientCount == 0) {
-        printf("No patients available for listing.\n");
+void listarPacientesComInformacoes
+        (
+                int codigosPacientes[],
+                char nomes[][50],
+                char datasNascimento[][11],
+                char generos[][10],
+                int totalPacientes
+        )
+{
+    if (totalPacientes == 0) {
+        printf("Nenhum paciente disponivel para listagem.\n");
         return;
     }
 
-    printf("Patient List with Info:\n");
-    for (int i = 0; i < patientCount; i++) {
-        // Age determination based on DOB
-        int age = calculateAge(DOBs[i]);
-
-        printf("Patient Code: %d\n", patientCodes[i]);
-        printf("Name: %s\n", names[i]);
-        printf("Age: %d\n", age);
-        printf("Gender: %s\n", genders[i]);
-        printf("Date of Birth: %s\n", DOBs[i]);
-        printf("\n");
+    printf("Lista de Pacientes com Informacoes:\n");
+    for (int i = 0; i < totalPacientes; i++) {
+        printf("Codigo do Paciente: %d\n", codigosPacientes[i]);
+        printf("Nome: %s\n", nomes[i]);
+        printf("Data de Nascimento: %s\n", datasNascimento[i]);
+        printf("Genero: %s\n", generos[i]);
+        printf("----------------------------------------\n");
     }
 }
-
-
