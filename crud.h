@@ -23,15 +23,15 @@ int adicionarPaciente
                 int proximoCodigoPaciente,
                 int totalPacientes
         );
-int adicionarAgendamento
+int adicionarAtendimento
         (
-                int codigosAgendamentos[],
+                int codigosAtendimentos[],
                 int codigosPacientes[],
                 char tipos[][20],
-                char datasAgendamento[][11],
+                char datasAtendimento[][11],
                 char status[][50],
                 float precos[],
-                int totalAgendamentos,
+                int totalAtendimentos,
                 int totalPacientes
         );
 void exibirInformacoesPaciente
@@ -42,12 +42,12 @@ void exibirInformacoesPaciente
                 char enderecos[][100], char datasNascimento[][11],
                 int idades[], int totalPacientes
         );
-void exibirAgendamentos
+void exibirAtendimentos
         (
-                int codigosAgendamentos[], int codigosPacientes[],
-                char tipos[][20], char datasAgendamento[][11],
+                int codigosAtendimentos[], int codigosPacientes[],
+                char tipos[][20], char datasAtendimento[][11],
                 char status[][50], float precos[],
-                int totalAgendamentos
+                int totalAtendimentos
         );
 int removerPaciente
         (int codigosPacientes[],
@@ -60,16 +60,16 @@ int removerPaciente
          char datasNascimento[][11],
          int idades[],
          int totalPacientes);
-int removerAgendamento
-        (int codigosAgendamentos[],
+int removerAtendimento
+        (int codigosAtendimentos[],
          char status[][50],
-         int totalAgendamentos);
-void exibirAgendamentos
+         int totalAtendimentos);
+void exibirAtendimentos
         (
-                int codigosAgendamentos[], int codigosPacientes[],
-                char tipos[][20], char datasAgendamento[][11],
+                int codigosAtendimentos[], int codigosPacientes[],
+                char tipos[][20], char datasAtendimento[][11],
                 char status[][50], float precos[],
-                int totalAgendamentos
+                int totalAtendimentos
         );
 void listarPacientesComInformacoes
         (
@@ -84,3 +84,33 @@ int calcularIdade
         const char dataNascimento[]
         );
 
+void alterarDadosPaciente
+        (
+                int codigosPacientes[], char nomes[][50],
+                char generos[][10], char RGs[][15],
+                char CPFs[][15], char tiposSanguineos[][5],
+                char fatoresRH[], char enderecos[][100],
+                char datasNascimento[][11], int idades[],
+                int totalPacientes
+        );
+
+void listarPacientesPorTipoSanguineo
+        (
+                int codigosPacientes[], char nomes[][50],
+                char tiposSanguineos[][5], char fatoresRH[],
+                char datasNascimento[][11], int totalPacientes
+        );
+
+void listarConsultasPorData
+        (
+                int codigosPacientes[], char nomes[][50], char generos[][10],
+                char datasNascimento[][11], int idades[],
+                int codigosAtendimentos[], char tipos[][20], float precos[],
+                char datasAtendimento[][11], int totalPacientes, int totalAtendimentos
+        );
+
+void mostrarPacientesOrdenados
+        (
+                int codigosPacientes[], char nomes[][50],
+                int totalPacientes, int idades[]
+                );
