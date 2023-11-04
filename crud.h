@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 
-#define MAX_PATIENTS 100
-#define MAX_APPOINTMENTS 100
+#define MAX_PACIENTES 100
+#define MAX_ATENDIMENTOS 100
 
 // PROTOTYPES FOR REFERENCE
 int adicionarPaciente
@@ -50,20 +50,18 @@ void exibirAtendimentos
                 int totalAtendimentos
         );
 int removerPaciente
-        (int codigosPacientes[],
-         char nomes[][50],
-         char RGs[][15],
-         char CPFs[][15],
-         char tiposSanguineos[][5],
-         char fatoresRH[],
-         char enderecos[][100],
-         char datasNascimento[][11],
-         int idades[],
-         int totalPacientes);
+        (
+                int codigosPacientes[],char nomes[][50],
+                char RGs[][15],char CPFs[][15],
+                char tiposSanguineos[][5],char fatoresRH[],
+                char enderecos[][100],char datasNascimento[][11],
+                int idades[],int totalPacientes
+         );
 int removerAtendimento
-        (int codigosAtendimentos[],
-         char status[][50],
-         int totalAtendimentos);
+        (
+                int codigosAtendimentos[],char status[][50],
+                int totalAtendimentos
+         );
 void exibirAtendimentos
         (
                 int codigosAtendimentos[], int codigosPacientes[],
@@ -75,13 +73,13 @@ void listarPacientesComInformacoes
         (
                 int codigosPacientes[],
                 char nomes[][50],
-                char datasNascimento[][11],
+                int idades[],
                 char generos[][10],
                 int totalPacientes
         );
 int calcularIdade
-(
-        const char dataNascimento[]
+        (
+                const char dataNascimento[]
         );
 
 void alterarDadosPaciente
@@ -112,5 +110,28 @@ void listarConsultasPorData
 void mostrarPacientesOrdenados
         (
                 int codigosPacientes[], char nomes[][50],
-                int totalPacientes, int idades[]
-                );
+                int idades[], int totalPacientes
+        );
+void mostrarSomaConsultasPorPaciente
+        (
+                int codigosAtendimentos[], float precos[],
+                int totalAtendimentos, int codigosPacientes[]
+        );
+
+void mostrarSomaConsultasPorData
+        (
+                int codigosAtendimentos[], float precos[],
+                int totalAtendimentos, char datasAtendimento[][11]
+        );
+void mostrarSomaConsultasPorPeriodo
+        (
+                int codigosAtendimentos[], float precos[],
+                char datasAtendimento[][11], int totalAtendimentos
+        );
+
+void editarAtendimento(
+        int codigosAtendimentos[], int totalAtendimentos,
+        int codigosPacientes[], char tipos[][20],
+        char datasAtendimento[][11], char status[][50],
+        float precos[], int totalPacientes
+);

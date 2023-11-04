@@ -3,9 +3,6 @@
 #include <string.h>
 #include "crud.h"
 
-#define MAX_PACIENTES 100
-#define MAX_ATENDIMENTOS 100
-
 int codigosPacientesParaAtendimentos[MAX_ATENDIMENTOS];
 int numeroAtendimentoPorPaciente[MAX_PACIENTES] = {0};
 
@@ -20,6 +17,8 @@ int main() {
     char enderecos[MAX_PACIENTES][100];
     char datasNascimento[MAX_PACIENTES][11];
     int idades[MAX_PACIENTES];
+    int ordemPorNome[MAX_PACIENTES];
+
 
     int codigosAtendimentos[MAX_ATENDIMENTOS];
     char tipos[MAX_ATENDIMENTOS][20];
@@ -32,20 +31,28 @@ int main() {
     int totalPacientes = proximoCodigoPaciente - 1000;
 
     while (1) {
-        printf("\nPacientes:\n");
-        printf("1. Adicionar Paciente\n");
+        printf("--------------------------------------------\n");
+        printf("Pacientes:\n");
+        printf("\n1. Adicionar Paciente\n");
         printf("2. Remover Paciente\n");
-        printf("3. Alterar Informacoes do Paciente\n");
+        printf("3. Editar Informacoes do Paciente\n");
         printf("4. Exibir Informacoes do Paciente\n");
         printf("5. Listar Pacientes com Informacoes\n");
-        printf("6. Listar Pacientes por Tipo Sanguineo\n");
-        printf("7. Listar Pacientes por Ordem Alfabetica\n");
-        printf("\nAtendimentos:\n");
-        printf("8. Adicionar Atendimento\n");
-        printf("9. Remover Atendimento\n");
-        printf("10. Exibir Atendimentos\n");
-        printf("11. Listar Consultas por Data\n");
-        printf("\n0. Sair\n");
+        printf("6. Listar Pacientes com Consultas em um Dia\n");
+        printf("7. Listar Pacientes por Tipo Sanguineo\n");
+        printf("8. Listar Pacientes por Ordem Alfabetica\n");
+        printf("\n--------------------------------------------\n");
+        printf("Atendimentos:\n");
+        printf("\n9. Adicionar Atendimento\n");
+        printf("10. Remover Atendimento\n");
+        printf("11. Editar Atendimentos\n");
+        printf("12. Exibir Atendimentos\n");
+        printf("13. Listar Soma dos Atendimentos Pagos por Paciente\n");
+        printf("14. Listar Soma dos Atendimentos Pagos em um Dia\n");
+        printf("15. Listar Soma dos Atendimentos Pagos por Periodo\n");
+        printf("--------------------------------------------\n");
+        printf("0. Sair\n");
+        printf("--------------------------------------------\n");
 
         int escolha;
         printf("Digite sua escolha: ");
@@ -94,43 +101,10 @@ int main() {
             listarPacientesComInformacoes
                     (
                             codigosPacientes, nomes,
-                            datasNascimento, generos,
+                            idades, generos,
                             totalPacientes
                     );
         } else if (escolha == 6) {
-            listarPacientesPorTipoSanguineo
-                    (
-                            codigosPacientes, nomes,
-                            tiposSanguineos, fatoresRH,
-                            datasNascimento, totalPacientes
-                    );
-        } else if (escolha == 7) {
-            mostrarPacientesOrdenados
-            (
-                    codigosPacientes,nomes,
-                    totalPacientes, idades);
-        } else if (escolha == 8) {
-            totalAtendimentos = adicionarAtendimento
-                    (
-                            codigosAtendimentos, codigosPacientes,
-                            tipos, datasAtendimento,
-                            status, precos,
-                            totalAtendimentos, totalPacientes
-                    );
-        } else if (escolha == 9) {
-            totalAtendimentos = removerAtendimento
-                    (
-                            codigosAtendimentos, status, totalAtendimentos
-                    );
-        } else if (escolha == 10) {
-            exibirAtendimentos
-                    (
-                            codigosAtendimentos,
-                            codigosPacientes, tipos,
-                            datasAtendimento, status,
-                            precos, totalAtendimentos
-                    );
-        } else if (escolha == 11) {
             listarConsultasPorData
                     (
                             codigosPacientes, nomes,
@@ -138,6 +112,63 @@ int main() {
                             idades, codigosAtendimentos,
                             tipos, precos, datasAtendimento,
                             totalPacientes, totalAtendimentos
+                    );
+        } else if (escolha == 7) {
+            listarPacientesPorTipoSanguineo
+                    (
+                            codigosPacientes, nomes,
+                            tiposSanguineos, fatoresRH,
+                            datasNascimento, totalPacientes
+                    );
+        } else if (escolha == 8) {
+            mostrarPacientesOrdenados
+            (
+                    codigosPacientes,nomes,
+                    idades, totalPacientes);
+        } else if (escolha == 9) {
+            totalAtendimentos = adicionarAtendimento
+                    (
+                            codigosAtendimentos, codigosPacientes,
+                            tipos, datasAtendimento,
+                            status, precos,
+                            totalAtendimentos, totalPacientes
+                    );
+        } else if (escolha == 10) {
+            totalAtendimentos = removerAtendimento
+                    (
+                            codigosAtendimentos, status, totalAtendimentos
+                    );
+        } else if (escolha == 11) {
+            editarAtendimento(
+                    codigosAtendimentos, totalAtendimentos,
+                    codigosPacientes, tipos,
+                    datasAtendimento, status, precos, totalPacientes
+            );
+        } else if (escolha == 12) {
+            exibirAtendimentos
+                    (
+                            codigosAtendimentos,
+                            codigosPacientes, tipos,
+                            datasAtendimento, status,
+                            precos, totalAtendimentos
+                    );
+        } else if (escolha == 13) {
+            mostrarSomaConsultasPorPaciente // Bugado
+                    (
+                            codigosAtendimentos, precos,
+                            totalAtendimentos,codigosPacientes
+                    );
+        } else if (escolha == 14) {
+            mostrarSomaConsultasPorData
+                    (
+                            codigosAtendimentos, precos,
+                            totalAtendimentos, datasAtendimento
+                    );
+        } else if (escolha == 15) {
+            mostrarSomaConsultasPorPeriodo
+                    (
+                            codigosAtendimentos, precos,
+                            datasAtendimento, totalAtendimentos
                     );
         } else if (escolha == 0) {
             exit(0);
@@ -147,14 +178,13 @@ int main() {
     }
 }
 
-#include <stdio.h>
-#include <string.h>
-
-int adicionarPaciente(int codigosPacientes[], char nomes[][50], char generos[][10],
-                      char RGs[][15], char CPFs[][15], char tiposSanguineos[][5],
-                      char fatoresRH[], char enderecos[][100],
-                      char datasNascimento[][11], int idades[],
-                      int proximoCodigoPaciente, int totalPacientes)
+int adicionarPaciente
+(
+        int codigosPacientes[], char nomes[][50], char generos[][10],
+        char RGs[][15], char CPFs[][15], char tiposSanguineos[][5],
+        char fatoresRH[], char enderecos[][100],
+        char datasNascimento[][11], int idades[],
+        int proximoCodigoPaciente, int totalPacientes)
 {
     if (totalPacientes >= MAX_PACIENTES) {
         printf("Numero maximo de pacientes atingido.\n");
@@ -175,11 +205,18 @@ int adicionarPaciente(int codigosPacientes[], char nomes[][50], char generos[][1
         }
     } while (strlen(nomes[totalPacientes]) == 0);
 
-    // Solicitar o genero biologico
-    printf("Digite o genero biologico (F/M): ");
-    if (fgets(generos[totalPacientes], sizeof(generos[0]), stdin) != NULL) {
-        generos[totalPacientes][strcspn(generos[totalPacientes], "\n")] = '\0';
+    // Escolher o Gênero (F ou M)
+    printf("Informe o genero biologico (Digite apenas F ou M): ");
+    char genero;
+    scanf(" %c", &genero);
+
+    if (genero != 'F' && genero != 'M') {
+        printf("Escolha invalida. Nenhuma informacao alterada.\n");
+        return proximoCodigoPaciente;
     }
+
+    generos[totalPacientes][0] = genero;
+    generos[totalPacientes][1] = '\0';
 
     // Solicitar o RG
     printf("Digite o RG: ");
@@ -187,28 +224,40 @@ int adicionarPaciente(int codigosPacientes[], char nomes[][50], char generos[][1
         RGs[totalPacientes][strcspn(RGs[totalPacientes], "\n")] = '\0';
     }
 
-    // Solicitar o CPF (obrigatório)
-    printf("Digite o CPF (apenas os numeros): ");
-    if (fgets(CPFs[totalPacientes], sizeof(CPFs[0]), stdin) != NULL) {
-        CPFs[totalPacientes][strcspn(CPFs[totalPacientes], "\n")] = '\0';
-    } else {
-        printf("Por favor, insira um CPF valido.\n");
+    while ((c = getchar()) != '\n');
+    // Solicitar o CPF (Obrigatório)
+    while (1) {
+        printf("Digite o CPF (apenas os numeros): ");
+        if (fgets(CPFs[totalPacientes], sizeof(CPFs[0]), stdin) != NULL) {
+            CPFs[totalPacientes][strcspn(CPFs[totalPacientes], "\n")] = '\0';
+            if (strlen(CPFs[totalPacientes]) == 11) {
+                break;
+            }
+        }
+        printf("Por favor insira um CPF valido (11 digitos).\n" );
+    }
+
+    // Escolher o Tipo Sanguíneo
+    int escolhaTipoSanguineo;
+    printf("Escolha o Tipo Sanguineo\n 1. A\n 2. B\n 3. AB\n 4. O\n ");
+    scanf("%d", &escolhaTipoSanguineo);
+
+    if (escolhaTipoSanguineo < 1 || escolhaTipoSanguineo > 4) {
+        printf("Escolha invalida. Nenhuma informacao alterada.\n");
         return proximoCodigoPaciente;
     }
 
-    // Solicitar o tipo sanguineo
-    printf("Digite o tipo sanguineo (A/B/AB/O): ");
-    if (fgets(tiposSanguineos[totalPacientes], sizeof(tiposSanguineos[0]), stdin) != NULL) {
-        tiposSanguineos[totalPacientes][strcspn(tiposSanguineos[totalPacientes], "\n")] = '\0';
+    char tiposSanguineosPossiveis[4][3] = { "A", "B", "AB", "O" };
+    strcpy(tiposSanguineos[totalPacientes], tiposSanguineosPossiveis[escolhaTipoSanguineo - 1]);
+
+    // Se o tipo sanguíneo for informado, só então pedir o fator RH
+    if (tiposSanguineos[totalPacientes][0] != '\0') {
+        printf("Escolha o Fator RH (+/-): ");
+        scanf(" %c", &fatoresRH[totalPacientes]);
+
+        while ((c = getchar()) != '\n' && c != EOF);
     }
 
-    // Solicitar o fator RH
-    printf("Digite o fator RH (+/-): ");
-    if (fgets(fatoresRH, 2, stdin) != NULL) {
-        fatoresRH[totalPacientes][strcspn(fatoresRH, "\n")] = '\0';
-    }
-
-    // Solicitar o endereco
     printf("Digite o endereco: ");
     if (fgets(enderecos[totalPacientes], sizeof(enderecos[0]), stdin) != NULL) {
         enderecos[totalPacientes][strcspn(enderecos[totalPacientes], "\n")] = '\0';
@@ -216,18 +265,17 @@ int adicionarPaciente(int codigosPacientes[], char nomes[][50], char generos[][1
 
     // Solicitar a data de nascimento até que seja fornecida (obrigatório)
     do {
-        printf("Digite a data de nascimento (dd/mm/yyyy): ");
+        printf("Digite a data de nascimento (obrigatoriamente no formato dd/mm/yyyy): ");
         if (fgets(datasNascimento[totalPacientes], sizeof(datasNascimento[0]), stdin) != NULL) {
             datasNascimento[totalPacientes][strcspn(datasNascimento[totalPacientes], "\n")] = '\0';
-        } else {
-            printf("Por favor, insira uma data de nascimento valida.\n");
         }
-    } while (strlen(datasNascimento[totalPacientes]) == 0);
+    } while (strlen(datasNascimento[totalPacientes]) <= 9);
 
     // Calcular a idade e atribuir o próximo código de paciente disponível
     idades[totalPacientes] = calcularIdade(datasNascimento[totalPacientes]);
     codigosPacientes[totalPacientes] = proximoCodigoPaciente;
     proximoCodigoPaciente++;
+    fflush(stdin);
 
     printf("Paciente adicionado com sucesso.\n Codigo do Paciente: %d\n", codigosPacientes[totalPacientes]);
     return proximoCodigoPaciente;
@@ -239,35 +287,26 @@ int adicionarAtendimento
                 char tipos[][20], char datasAtendimento[][11],
                 char status[][50], float precos[],
                 int totalAtendimentos, int totalPacientes
-        ) {
+        )
+{
     if (totalAtendimentos >= MAX_ATENDIMENTOS) {
         printf("Limite maximo de atendimentos atingido.\n");
         return totalAtendimentos;
     }
 
     if (totalPacientes == 0) {
-        printf("Nenhum paciente disponível. Adicione um paciente primeiro.\n");
+        printf("Nenhum paciente disponivel. Adicione um paciente primeiro.\n");
         return totalAtendimentos;
     }
 
-    printf("Digite o Codigo do Atendimento: ");
-    scanf("%d", &codigosAtendimentos[totalAtendimentos]);
-
-    // Gerar o código automaticamente (não implementado ainda)
-    /* char codigoAtendimento[20];
-    snprintf
-    (codigoAtendimento,
-     sizeof(codigoAtendimento),
-     "%d_%d", codigoPaciente,
-     numeroAtendimentoPorPaciente[indicePaciente] + 1
-     );
-    */
+    // Definir automaticamente o código do atendimento sequencial
+    int proximoCodigoAtendimento = totalAtendimentos + 1;
+    codigosAtendimentos[totalAtendimentos] = proximoCodigoAtendimento;
 
     int codigoPaciente;
     printf("Digite o Codigo do Paciente: ");
     scanf("%d", &codigoPaciente);
 
-    // Verificar se o paciente com o código fornecido existe
     int indicePaciente = -1;
     for (int i = 0; i < totalPacientes; i++) {
         if (codigosPacientes[i] == codigoPaciente) {
@@ -280,13 +319,19 @@ int adicionarAtendimento
         printf("Paciente com o codigo fornecido nao encontrado.\n");
         return totalAtendimentos;
     }
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
 
+    int c;
     char novaDataAtendimento[11];
-    printf("Digite a Data do Atendimento (dd/mm/aaaa): ");
-    fgets(novaDataAtendimento, sizeof(novaDataAtendimento), stdin);
-    novaDataAtendimento[strcspn(novaDataAtendimento, "\n")] = '\0';
+
+    while ((c = getchar()) != '\n' && c != EOF);
+    do {
+        printf("Digite a data do atendimento (dd/mm/yyyy): ");
+        if (fgets(novaDataAtendimento, sizeof(novaDataAtendimento), stdin) != NULL) {
+            novaDataAtendimento[strcspn(novaDataAtendimento, "\n")] = '\0';
+        } else {
+            printf("Por favor, insira uma data de atendimento valida.\n");
+        }
+    } while (strlen(novaDataAtendimento) == 0);
 
     // Verificar se já existe um atendimento para este paciente na mesma data
     for (int i = 0; i < totalAtendimentos; i++) {
@@ -297,20 +342,28 @@ int adicionarAtendimento
         }
     }
 
-    strcpy(datasAtendimento[totalAtendimentos], novaDataAtendimento);
     codigosPacientesParaAtendimentos[totalAtendimentos] = codigoPaciente;
 
-    while ((c = getchar()) != '\n' && c != EOF);
+    printf("Selecione o Tipo de Atendimento\n1 - Atendimento\n 2 - Retorno\n ");
+    int tipoAtendimento;
+    scanf("%d", &tipoAtendimento);
 
-    printf("Digite o Tipo (atendimento/retorno): ");
-    scanf(" %[^\n]", tipos[totalAtendimentos]);
+    if (tipoAtendimento == 1) {
+        strcpy(tipos[totalAtendimentos], "Atendimento");
+    } else if (tipoAtendimento == 2) {
+        strcpy(tipos[totalAtendimentos], "Retorno");
+    } else {
+        printf("Escolha invalida. Nenhuma informacao alterada.\n");
+        return totalAtendimentos;
+    }
+
     strcpy(datasAtendimento[totalAtendimentos], novaDataAtendimento);
-    strcpy(status[totalAtendimentos], "Agendado"); // Inicialmente define como "Agendado"
+    strcpy(status[totalAtendimentos], "Agendado");
     printf("Digite o Preco: ");
     scanf("%f", &precos[totalAtendimentos]);
 
     totalAtendimentos++;
-    printf("Atendimento adicionado com sucesso.\nCodigo do Atendimento: %d\n",
+    printf("Atendimento adicionado com sucesso. Codigo do Atendimento: %d\n",
            codigosAtendimentos[totalAtendimentos - 1]);
 
     return totalAtendimentos;
@@ -494,27 +547,25 @@ int removerAtendimento
 }
 
 void listarPacientesComInformacoes
-        (
-                int codigosPacientes[],
-                char nomes[][50],
-                char datasNascimento[][11],
-                char generos[][10],
-                int totalPacientes
+(
+        int codigosPacientes[],char nomes[][50],
+        int idades[], char generos[][10],
+        int totalPacientes
         )
-{
+        {
     if (totalPacientes == 0) {
-        printf("Nenhum paciente disponivel para listagem.\n");
+        printf("Nenhum paciente para ser listado.\n");
         return;
     }
 
-    printf("Lista de Pacientes com Informacoes:\n");
-    printf("----------------------------------------\n");
+    printf("\nLista de Pacientes com Informacoes:\n");
+    printf("---------------------------------------------\n");
     for (int i = 0; i < totalPacientes; i++) {
-        printf(" Codigo do Paciente: %d\n", codigosPacientes[i]);
-        printf(" Nome: %s\n", nomes[i]);
-        printf(" Idade: %d\n", calcularIdade(datasNascimento[i]));
-        printf(" Genero: %s\n", generos[i]);
-        printf("----------------------------------------\n");
+        printf("Codigo: %d\n", codigosPacientes[i]);
+        printf("Genero: %s\n", generos[i]);
+        printf("Nome: %s\n", nomes[i]);
+        printf("Idade: %d\n", idades[i]);
+        printf("---------------------------------------------\n");
     }
 }
 
@@ -568,10 +619,22 @@ void alterarDadosPaciente
         scanf("%d", &escolha);
 
         if (escolha == 1) {
-            printf("Novo Nome: ");
-            while (getchar() != '\n');
-            fgets(nomes[indicePaciente], sizeof(nomes[0]), stdin);
-            nomes[indicePaciente][strcspn(nomes[indicePaciente], "\n")] = '\0';
+            printf("Digite o novo nome: ");
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);
+            while (1) {
+                if (fgets(nomes[indicePaciente], sizeof(nomes[indicePaciente]), stdin)) {
+                    nomes[indicePaciente][strcspn(nomes[indicePaciente], "\n")] = '\0';
+                    if (strlen(nomes[indicePaciente]) > 0) {
+                        break;
+                    } else {
+                        printf("Por favor, insira um nome valido: ");
+                    }
+                } else {
+                    printf("Nome nao especificado.\n");
+                    return;
+                }
+            }
         }
         else if (escolha == 2) {
             printf("Novo Genero: ");
@@ -586,10 +649,22 @@ void alterarDadosPaciente
             RGs[indicePaciente][strcspn(RGs[indicePaciente], "\n")] = '\0';
         }
         else if (escolha == 4) {
-            printf("Novo CPF: ");
-            while (getchar() != '\n');
-            fgets(CPFs[indicePaciente], sizeof(CPFs[0]), stdin);
-            CPFs[indicePaciente][strcspn(CPFs[indicePaciente], "\n")] = '\0';
+            printf("Digite o novo CPF: ");
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);
+            while (1) {
+                if (fgets(CPFs[indicePaciente], sizeof(CPFs[indicePaciente]), stdin)) {
+                    CPFs[indicePaciente][strcspn(CPFs[indicePaciente], "\n")] = '\0';
+                    if (strlen(CPFs[indicePaciente]) > 0) {
+                        break;
+                    } else {
+                        printf("Por favor, insira um CPF valido: ");
+                    }
+                } else {
+                    printf("CPF nao especificado.\n");
+                    return;
+                }
+            }
         }
         else if (escolha == 5) {
             printf("Novo Tipo Sanguineo: ");
@@ -608,10 +683,22 @@ void alterarDadosPaciente
             enderecos[indicePaciente][strcspn(enderecos[indicePaciente], "\n")] = '\0';
         }
         else if (escolha == 8) {
-            printf("Nova Data de Nascimento (dd/mm/aaaa): ");
-            while (getchar() != '\n');
-            fgets(datasNascimento[indicePaciente], sizeof(datasNascimento[0]), stdin);
-            datasNascimento[indicePaciente][strcspn(datasNascimento[indicePaciente], "\n")] = '\0';
+            printf("Digite a nova data de nascimento: ");
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);
+            while (1) {
+                if (fgets(datasNascimento[indicePaciente], sizeof(datasNascimento[indicePaciente]), stdin)) {
+                    datasNascimento[indicePaciente][strcspn(datasNascimento[indicePaciente], "\n")] = '\0';
+                    if (strlen(datasNascimento[indicePaciente]) > 0) {
+                        break;
+                    } else {
+                        printf("Por favor, insira uma data de nacimento valida: ");
+                    }
+                } else {
+                    printf("Data de nascimento nao especificado.\n");
+                    return;
+                }
+            }
             idades[indicePaciente] = calcularIdade(datasNascimento[indicePaciente]);
         }
         else if (escolha == 9) {
@@ -708,7 +795,12 @@ void listarConsultasPorData
     }
 }
 
-void ordenarPacientesPorNome(int codigosPacientes[], char nomes[][50], int totalPacientes, int idades[50]) {
+void ordenarPacientesPorNome
+        (
+                int codigosPacientes[], char nomes[][50],
+                int totalPacientes, int idades[], int ordemPorNome[]
+        )
+{
     int troca = 1;
     while (troca) {
         troca = 0;
@@ -719,14 +811,18 @@ void ordenarPacientesPorNome(int codigosPacientes[], char nomes[][50], int total
                 codigosPacientes[i] = codigosPacientes[i + 1];
                 codigosPacientes[i + 1] = tempCodigo;
 
+                int tempIdade = idades[i];
+                idades[i] = idades[i + 1];
+                idades[i + 1] = tempIdade;
+
                 char tempNome[100];
                 strcpy(tempNome, nomes[i]);
                 strcpy(nomes[i], nomes[i + 1]);
                 strcpy(nomes[i + 1], tempNome);
 
-                int tempIdade = idades[i];
-                idades[i] = idades[i + 1];
-                idades[i + 1] = tempIdade;
+                int tempIndice = ordemPorNome[i];
+                ordemPorNome[i] = ordemPorNome[i + 1];
+                ordemPorNome[i + 1] = tempIndice;
 
                 troca = 1;
             }
@@ -734,15 +830,221 @@ void ordenarPacientesPorNome(int codigosPacientes[], char nomes[][50], int total
     }
 }
 
-void mostrarPacientesOrdenados(int codigosPacientes[], char nomes[][50], int totalPacientes, int idades[]) {
-    ordenarPacientesPorNome(codigosPacientes, nomes, totalPacientes, idades);
-
+void mostrarPacientesOrdenados
+(
+        int codigosPacientes[], char nomes[][50],
+        int idades[], int totalPacientes
+        )
+        {
+            int ordemPorNome[MAX_PACIENTES]; // vetor de índices ordenado por nome
+            for (int i = 0; i < totalPacientes; i++) {
+                ordemPorNome[i] = i;
+            }
+    ordenarPacientesPorNome(codigosPacientes, nomes, totalPacientes, idades, ordemPorNome);
     printf("\nLista de Pacientes Ordenados por Nome:\n");
     printf("---------------------------------------------\n");
     for (int i = 0; i < totalPacientes; i++) {
-        printf("Codigo: %d\n", codigosPacientes[i]);
-        printf("Nome: %s\n", nomes[i]);
-        printf("Idade: %d\n", idades[i]);
+        int index = ordemPorNome[i];
+        printf("Codigo: %d\n", codigosPacientes[index]);
+        printf("Nome: %s\n", nomes[index]);
+        printf("Idade: %d\n", idades[index]);
         printf("---------------------------------------------\n");
     }
 }
+
+void mostrarSomaConsultasPorPaciente // nao funciona ainda
+(
+        int codigosAtendimentos[], float precos[],
+        int totalAtendimentos, int codigosPacientes[]
+        )
+        {
+    if (totalAtendimentos == 0) {
+        printf("Nao existem atendimentos para mostrar.");
+        return;
+    }
+
+    float soma = 0;
+
+    for (int i = 0; i < totalAtendimentos; i++) {
+        if (codigosAtendimentos[i] == codigosPacientes[i]) {
+            soma += precos[i];
+        }
+    }
+
+    printf("Soma das consultas pagas pelo paciente %d: %.2f\n", codigosPacientes, soma);
+}
+
+void mostrarSomaConsultasPorData
+(
+        int codigosAtendimentos[], float precos[],
+        int totalAtendimentos, char datasAtendimento[][11]
+        ) {
+    if (totalAtendimentos == 0) {
+        printf("Nao existem atendimentos para mostrar.\n");
+        return;
+    }
+
+    char dataAtendimento[11];
+    float soma = 0;
+
+    int c;
+
+    while ((c = getchar()) == '\n' && c == EOF);
+
+    printf("Digite uma data para somar os atendimentos feitos nela: ");
+    fgets(dataAtendimento, sizeof(dataAtendimento), stdin);
+    dataAtendimento[strcspn(dataAtendimento, "\n")] = '\0';
+
+    for (int i = 0; i < totalAtendimentos; i++) {
+        if (strcmp(datasAtendimento[i], dataAtendimento) == 0) {
+            soma += precos[i];
+        }
+    }
+
+    printf("Soma das consultas pagas para a data %s: %.2f\n", dataAtendimento, soma);
+}
+
+void mostrarSomaConsultasPorPeriodo
+        (
+            int codigosAtendimentos[], float precos[],
+            char datasAtendimento[][11], int totalAtendimentos
+        )
+        {
+
+    if (totalAtendimentos == 0) {
+        printf("Nao existem atendimentos para mostrar.\n");
+        return;
+    }
+
+    char dataInicial[11];
+    char dataFinal[11];
+    float soma = 0;
+
+
+            int c;
+
+            while ((c = getchar()) == '\n' && c == EOF);
+
+            printf("Digite uma data inicial: ");
+            fgets(dataInicial, sizeof(dataInicial), stdin);
+            dataInicial[strcspn(dataInicial, "\n")] = '\0';
+
+            while ((c = getchar()) == '\n' && c == EOF);
+            printf("Digite uma data final: ");
+            fgets(dataFinal, sizeof(dataFinal), stdin);
+            dataFinal[strcspn(dataFinal, "\n")] = '\0';
+
+            for (int i = 0; i < totalAtendimentos; i++) {
+        if (strcmp(datasAtendimento[i], dataInicial) >= 0 && strcmp(datasAtendimento[i], dataFinal) <= 0) {
+            soma += precos[i];
+        }
+    }
+
+    printf("Soma das consultas pagas para o periodo de %s a %s: %.2f\n", dataInicial, dataFinal, soma);
+}
+
+void editarAtendimento(
+        int codigosAtendimentos[], int totalAtendimentos,
+        int codigosPacientes[], char tipos[][20],
+        char datasAtendimento[][11], char status[][50],
+        float precos[], int totalPacientes
+) {
+    int codigoAtendimento;
+    printf("Digite o Codigo do Atendimento a ser editado: ");
+    scanf("%d", &codigoAtendimento);
+
+    int indiceAtendimento = -1;
+    for (int i = 0; i < totalAtendimentos; i++) {
+        if (codigosAtendimentos[i] == codigoAtendimento) {
+            indiceAtendimento = i;
+            break;
+        }
+    }
+
+    if (indiceAtendimento == -1) {
+        printf("Atendimento com o codigo fornecido nao encontrado.\n");
+        return;
+    }
+
+    int continuarEdicao = 1;
+
+    while (continuarEdicao) {
+        printf("Informacoes do Atendimento:\n");
+        printf("Codigo: %d\n", codigosAtendimentos[indiceAtendimento]);
+        printf("Codigo do Paciente: %d\n", codigosPacientes[indiceAtendimento]);
+        printf("Tipo: %s\n", tipos[indiceAtendimento]);
+        printf("Data de Atendimento: %s\n", datasAtendimento[indiceAtendimento]);
+        printf("Status: %s\n", status[indiceAtendimento]);
+        printf("Preco: %.2f\n", precos[indiceAtendimento]);
+        printf("\nSelecione a informacao a ser alterada:\n");
+        printf("1. Tipo\n");
+        printf("2. Data de Atendimento\n");
+        printf("3. Status\n");
+        printf("4. Preco\n");
+        printf("0. Sair\n");
+
+        int escolha;
+        printf("Digite sua escolha: ");
+        scanf("%d", &escolha);
+
+        // Limpar o buffer de entrada
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        switch (escolha) {
+            case 0:
+                continuarEdicao = 0;
+                break;
+            case 1:
+                printf("Selecione o novo Tipo:\n 1. Atendimento\n 2. Retorno:\n ");
+                int novoTipo;
+                scanf("%d", &novoTipo);
+                if (novoTipo == 1 || novoTipo == 2) {
+                    if (novoTipo == 1) {
+                        strcpy(tipos[indiceAtendimento], "Atendimento");
+                    } else {
+                        strcpy(tipos[indiceAtendimento], "Retorno");
+                    }
+                } else {
+                    printf("Escolha invalida. Nenhuma informacao alterada.\n");
+                }
+                break;
+            case 2:
+                printf("Digite a nova Data de Atendimento (dd/mm/aaaa): ");
+                scanf("%[^\n]", datasAtendimento[indiceAtendimento]);
+                break;
+            case 3:
+                printf("Selecione o novo Status\n 1 - Agendado\n 2 - Em espera\n 3 - Em atendimento\n 4 - Concluido\n ");
+                int novoStatus;
+                scanf("%d", &novoStatus);
+                if (novoStatus >= 1 && novoStatus <= 4) {
+                    switch (novoStatus) {
+                        case 1:
+                            strcpy(status[indiceAtendimento], "Agendado");
+                            break;
+                        case 2:
+                            strcpy(status[indiceAtendimento], "Em espera");
+                            break;
+                        case 3:
+                            strcpy(status[indiceAtendimento], "Em atendimento");
+                            break;
+                        case 4:
+                            strcpy(status[indiceAtendimento], "Concluido");
+                            break;
+                    }
+                } else {
+                    printf("Escolha invalida. Nenhuma informacao alterada.\n");
+                }
+                break;
+            case 4:
+                printf("Digite o novo Preco: ");
+                scanf("%f", &precos[indiceAtendimento]);
+                break;
+            default:
+                printf("Escolha invalida. Nenhuma informacao alterada.\n");
+                break;
+        }
+    }
+    printf("Informacao do Atendimento alterada com sucesso.\n");
+}
+
