@@ -49,20 +49,8 @@ cmake_ninja_workdir = C$:/Users/jorge/CLionProjects/Projeto_Sistema_Saude_TRABAL
 
 build cmake_object_order_depends_target_Projeto_Sistema_Saude_TRABALHO: phony || CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir
 
-build CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/crud_prof.c.obj: C_COMPILER__Projeto_Sistema_Saude_TRABALHO_unscanned_Debug C$:/Users/jorge/CLionProjects/Projeto_Sistema_Saude_TRABALHO/crud$ prof.c || cmake_object_order_depends_target_Projeto_Sistema_Saude_TRABALHO
-  DEP_FILE = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir\crud_prof.c.obj.d
-  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
-  OBJECT_FILE_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
-
 build CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/projeto_base.c.obj: C_COMPILER__Projeto_Sistema_Saude_TRABALHO_unscanned_Debug C$:/Users/jorge/CLionProjects/Projeto_Sistema_Saude_TRABALHO/projeto$ base.c || cmake_object_order_depends_target_Projeto_Sistema_Saude_TRABALHO
   DEP_FILE = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir\projeto_base.c.obj.d
-  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
-  OBJECT_FILE_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
-
-build CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/traduçao.c.obj: C_COMPILER__Projeto_Sistema_Saude_TRABALHO_unscanned_Debug C$:/Users/jorge/CLionProjects/Projeto_Sistema_Saude_TRABALHO/traduçao.c || cmake_object_order_depends_target_Projeto_Sistema_Saude_TRABALHO
-  DEP_FILE = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir\traduçao.c.obj.d
   FLAGS = -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
   OBJECT_FILE_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
@@ -75,7 +63,7 @@ build CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/traduçao.c.obj: C_COMPILER__
 #############################################
 # Link the static library libProjeto_Sistema_Saude_TRABALHO.a
 
-build libProjeto_Sistema_Saude_TRABALHO.a: C_STATIC_LIBRARY_LINKER__Projeto_Sistema_Saude_TRABALHO_Debug CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/crud_prof.c.obj CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/projeto_base.c.obj CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/traduçao.c.obj
+build libProjeto_Sistema_Saude_TRABALHO.a: C_STATIC_LIBRARY_LINKER__Projeto_Sistema_Saude_TRABALHO_Debug CMakeFiles/Projeto_Sistema_Saude_TRABALHO.dir/projeto_base.c.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\Projeto_Sistema_Saude_TRABALHO.dir
   POST_BUILD = cd .

@@ -101,8 +101,7 @@ void listarPacientesPorTipoSanguineo
 
 void listarConsultasPorData
         (
-                int codigosPacientes[], char nomes[][50], char generos[][10],
-                char datasNascimento[][11], int idades[],
+                int codigosPacientes[], char nomes[][50], char generos[][10], int idades[],
                 int codigosAtendimentos[], char tipos[][20], float precos[],
                 char datasAtendimento[][11], int totalPacientes, int totalAtendimentos
         );
@@ -115,18 +114,17 @@ void mostrarPacientesOrdenados
 void mostrarSomaConsultasPorPaciente
         (
                 int codigosAtendimentos[], float precos[],
-                int totalAtendimentos, int codigosPacientes[]
+                int totalAtendimentos, int codigosPacientesParaAtendimentos[]
         );
-
 void mostrarSomaConsultasPorData
         (
-                int codigosAtendimentos[], float precos[],
-                int totalAtendimentos, char datasAtendimento[][11]
+                float precos[], int totalAtendimentos,
+                char datasAtendimento[][11]
         );
 void mostrarSomaConsultasPorPeriodo
         (
-                int codigosAtendimentos[], float precos[],
-                char datasAtendimento[][11], int totalAtendimentos
+                float precos[], char datasAtendimento[][11],
+                int totalAtendimentos
         );
 
 void editarAtendimento(
