@@ -4,6 +4,7 @@
 #include "utilidades.h"
 #include "crud.h"
 
+int codigosPacientesParaAtendimentos[MAX_ATENDIMENTOS];
 
 int adicionarPaciente
         (

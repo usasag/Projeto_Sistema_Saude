@@ -8,4 +8,6 @@ add_library(Projeto_Sistema_Saude_TRABALHO
         "projeto base.c"
         pacientes.h
         atendimento.h
+        atendimento.c
+        paciente.c
 )

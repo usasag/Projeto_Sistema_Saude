@@ -3,8 +3,6 @@
 #define PROJETO_SISTEMA_SAUDE_TRABALHO_ATENDIMENTO_H
 #include "pacientes.h"
 
-int codigosPacientesParaAtendimentos[MAX_ATENDIMENTOS];
-
 int removerAtendimento
         (
                 int codigosAtendimentos[], char status[][50],
@@ -246,7 +244,7 @@ void editarAtendimento(
         int codigosAtendimentos[], int totalAtendimentos,
         int codigosPacientes[], char tipos[][20],
         char datasAtendimento[][11], char status[][50],
-        float precos[], int totalPacientes
+        float precos[]
 ) {
     int codigoAtendimento;
     printf("Digite o Codigo do Atendimento a ser editado: ");
@@ -352,8 +350,7 @@ void editarAtendimento(
 
 void mostrarSomaConsultasPorPaciente
         (
-                int codigosAtendimentos[], float precos[],
-                int totalAtendimentos, int codigosPacientesParaAtendimentos[]
+                float precos[],int totalAtendimentos
         )
 {
     if (totalAtendimentos == 0) {
@@ -377,7 +374,7 @@ void mostrarSomaConsultasPorPaciente
 }
 
 void ordenarAtendimentosPorDataDecrescente(
-        int codigosAtendimentos[], char tipos[][20], char status[][20],
+        int codigosAtendimentos[], char tipos[][20], char status[][50],
         char datasAtendimento[][11], float precos[], int totalAtendimentos) {
     int troca = 1;
     while (troca) {

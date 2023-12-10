@@ -5,6 +5,19 @@
 #include "pacientes.h"
 #include "atendimento.h"
 
+struct Pacientes {
+    int codigosPacientes;
+    char nomes[50];
+    char RGs[15];
+    char CPFs[15];
+    char tiposSanguineos[5];
+    char generos[2];
+    char fatoresRH[2];
+    char enderecos[100];
+    char datasNascimento[11];
+    int idades;
+};
+
 int main() {
     int codigosPacientes[MAX_PACIENTES];
     char nomes[MAX_PACIENTES][50];
@@ -140,7 +153,7 @@ int main() {
             editarAtendimento(
                     codigosAtendimentos, totalAtendimentos,
                     codigosPacientes, tipos,
-                    datasAtendimento, status, precos, totalPacientes
+                    datasAtendimento, status, precos
             );
         } else if (escolha == 12) {
             exibirAtendimentos
@@ -153,8 +166,7 @@ int main() {
         } else if (escolha == 13) {
             mostrarSomaConsultasPorPaciente
                     (
-                            codigosAtendimentos, precos,
-                            totalAtendimentos, codigosPacientes
+                            precos, totalAtendimentos
                     );
         } else if (escolha == 14) {
             mostrarSomaConsultasPorData

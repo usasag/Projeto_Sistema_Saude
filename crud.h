@@ -113,8 +113,7 @@ void mostrarPacientesOrdenados
         );
 void mostrarSomaConsultasPorPaciente
         (
-                int codigosAtendimentos[], float precos[],
-                int totalAtendimentos, int codigosPacientesParaAtendimentos[]
+                float precos[], int totalAtendimentos
         );
 void mostrarSomaConsultasPorData
         (
@@ -131,5 +130,5 @@ void editarAtendimento(
         int codigosAtendimentos[], int totalAtendimentos,
         int codigosPacientes[], char tipos[][20],
         char datasAtendimento[][11], char status[][50],
-        float precos[], int totalPacientes
+        float precos[]
 );
